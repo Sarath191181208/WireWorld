@@ -1,4 +1,4 @@
-# Conways Game Of life
+# Wire World
 
 A game with simple rules founded by **Jhon Horton Conway**. Altough a simple game it is discussed that has a possibilty to solve every existing problem.
 
