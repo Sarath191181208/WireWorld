@@ -75,8 +75,8 @@ def createbuttons(board: Grid):
         x += 60 + 12
         # +n*row_gap
 
-def checkKeypress(board):
-    global boardClr
+def checkKeypress(board: Grid):
+
     if event.key == pygame.K_SPACE:
         board.start()
 
@@ -84,13 +84,17 @@ def checkKeypress(board):
         board.clear()
 
     if event.key == pygame.K_s:
-        board.save()
+        save(board)
 
     if event.key == pygame.K_o:
-        board.load()
+        load(board)
 
     if event.key == pygame.K_r:
-        board.randomBoard()
+        board.toggle_red()
+    
+    if event.key == pygame.K_p:
+        board.toggle_pan()
+
 
 
 board = Grid(100, 100, 500, 500, WIN)

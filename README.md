@@ -1,43 +1,51 @@
 # Wire World
 
-A game with simple rules founded by **Jhon Horton Conway**. Altough a simple game it is discussed that has a possibilty to solve every existing problem.
+Wireworld is a cellular automaton first proposed by **Brian Silverman** in 1987, as part of his program Phantom Fish Tank. It subsequently became more widely known as a result of an article in the **"Computer Recreations"** column of Scientific American. Wireworld is particularly suited to simulating transistors, and Wireworld is Turing-complete i.e It can simulate a turning machine.
 
-Read more on Wikipedia : https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+Read more on Wikipedia : https://en.wikipedia.org/wiki/Wireworld
 
 # Description
 
-It has namely four rules:
+A Wireworld cell can be in one of four different states :
 
-- Any live cell with **fewer than two live neighbours dies**, as if by underpopulation.
-- Any live cell with **two or three live neighbours lives** on to the next generation.
-- Any live cell with **more than three live neighbours dies**, as if by overpopulation.
-- Any **dead cell with exactly three live neighbours becomes a live cell**, as if by reproduction.
+- empty <span style="color: black;">black</span>,
+- electron head <span style="color: blue;">blue</span>,
+- electron tail <span style="color: red;">red</span>,
+- conductor <span style="color: yellow;">yellow</span>.
 
-It is a simple yet a complex simulation representing life itself. Intruged by it's properties I tried a simple simulation.
+As in all cellular automata, time proceeds in discrete steps called generations (sometimes "gens" or "ticks"). Cells behave as follows:
+
+- empty → empty,
+- electron head → electron tail,
+- electron tail → conductor,
+- conductor → electron head if exactly one or two of the neighbouring cells are electron heads, otherwise remains conductor.
 
 ## Demo
 
-![Image](https://github.com/Sarath191181208/ConwaysGameOfLife/blob/master/images/Screenshot.png)
+![Image](https://github.com/Sarath191181208/WireWorld/blob/master/images/Screenshot.png)
 
 ## Features
 
-- A **Create button** to creates a random board.
+- A **Pan button** to pan board.
 - A **Clear button** to totally clear the board.
-- A **Start button** to start the visualization.
+- A **Start button** to toggle the visualization.
+- A **Red button** to toggle the visbility of red color.
 - **Save/Load** Features.
+- **Zoom** Feature.
+- Different **electronic components** like Diodes, Or Gate, And Gate etc...
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/Sarath191181208/ConwaysGameOfLife.git
+  git clone https://github.com/Sarath191181208/WireWorld.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd ./ConwaysGameOfLife
+  cd ./WireWorld
 ```
 
 Install dependencies
@@ -54,9 +62,9 @@ Run the project Locally
 
 ## References
 
-Wikipedia : https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+Wikipedia : https://en.wikipedia.org/wiki/Wireworld
 
-Coding Train : https://www.youtube.com/watch?v=FWSR_7kZuYg
+Wikipedia : https://en.wikipedia.org/wiki/Cyclic_cellular_automaton
 
 ## Usage
 
@@ -66,11 +74,12 @@ Coding Train : https://www.youtube.com/watch?v=FWSR_7kZuYg
 
 ## Hot keys
 
-- SPACE : Start visualization
+- SPACE : Toggle visualization
 - C : Clear
 - S : Save
 - O : Load
-- R : Random Board
+- R : Toggle Red
+- P : Toggle Pan
 
 ## Requirements
 
