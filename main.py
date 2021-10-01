@@ -1,5 +1,5 @@
-import threading
 import pygame
+from pygame.locals import MOUSEWHEEL
 import pygame_gui
 import os
 from threading import Thread
@@ -13,7 +13,7 @@ from components.LogicComponents import Generator, Line, Timer_comp, XORGate
 
 pygame.init()
 clock = pygame.time.Clock()
-WIN = pygame.display.set_mode((570,570))
+WIN = pygame.display.set_mode((590,570))
 pygame.display.set_caption('')
 FPS = 60
 manager = pygame_gui.UIManager(
@@ -28,10 +28,10 @@ def PYtxt(txt: str, fontSize: int = 28, font: str = 'freesansbold.ttf',
 def createbuttons(board: Grid):
 
     row_items = ((WIN.get_width()-board.width)-10)//60
-    row_gap = 5
+    row_gap = 15
     col_gap = (((WIN.get_width()-board.width)/row_items) - 60)/2
     start = board.width
-    y = 110
+    y = 60
     n = 1
     y_count = 0
 
@@ -72,7 +72,7 @@ def createbuttons(board: Grid):
     ]:
         Button(relative_rect=pygame.Rect((x, y), (60, 40)), text=name,
         manager=manager, tool_tip_text=None, func= func)
-        x += 60 + 10
+        x += 60 + 12
         # +n*row_gap
 
 def checkKeypress(board):
@@ -116,11 +116,7 @@ while run:
     elif pygame.mouse.get_pressed()[2]:
         if board.runGameOfLife:
             board.start()
-        x, y = pygame.mouse.get_pos()
-        gap = board.width // board.rows
-        y //= gap
-        x //= gap
-        board.delete(y, x)
+        board.delete()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -128,13 +124,15 @@ while run:
 
         if event.type == pygame.KEYDOWN:
             checkKeypress(board)
+        
+        if event.type == MOUSEWHEEL:
+            board.set_scale( event.y * -0.25)
 
         manager.process_events(event)
 
     WIN.fill(absBlack)
     thread = Thread(target= board.update(), args=(10,))
     thread.start()
-    # board.update()
 
     manager.update(time_delta)
     manager.draw_ui(WIN)

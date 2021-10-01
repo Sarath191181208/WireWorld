@@ -26,7 +26,7 @@
 
   "button": {
     "colours": {
-      "normal_bg": "#808080",
+      "normal_bg": "#000000",
       "hovered_bg": "#9632dc",
       "disabled_bg": "#25292e",
       "selected_bg": "#193754",
@@ -37,7 +37,7 @@
       "selected_text": "#FFFFFF",
       "disabled_text": "#6d736f",
       "active_text": "#FFFFFF",
-      "normal_border": "#808080",
+      "normal_border": "#9632dc",
       "hovered_border": "#9632dc",
       "disabled_border": "#808080",
       "selected_border": "#8080B0",

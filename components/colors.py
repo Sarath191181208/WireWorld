@@ -20,7 +20,7 @@ MAROON =        Color('#800000')
 OLIVE =         Color('#808000')
 RED =           Color('#ff2400')
 
-absBlack =      Color('#3f3f3f')
+absBlack =      Color('#000000')
 VIOLET_TINT =   Color('#411163')
 
 TRANSPARENT = (0, 0, 0, 0)
