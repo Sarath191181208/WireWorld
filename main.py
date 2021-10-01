@@ -1,20 +1,23 @@
+import threading
 import pygame
 import pygame_gui
+import os
+from threading import Thread
 
-from grid import Grid 
-from colors import *
-from button import Button
-from save_load import save, load
-from LogicComponents import ANDGate, Diode, NOTGate, OrGate
-from LogicComponents import Generator, Line, Timer_comp, XORGate
+from components.grid import Grid  
+from components.colors import *
+from components.button import Button
+from components.save_load import save, load
+from components.LogicComponents import ANDGate, Diode, NOTGate, OrGate
+from components.LogicComponents import Generator, Line, Timer_comp, XORGate
 
 pygame.init()
 clock = pygame.time.Clock()
-WIN = pygame.display.set_mode((700,670))
+WIN = pygame.display.set_mode((570,570))
 pygame.display.set_caption('')
 FPS = 60
 manager = pygame_gui.UIManager(
-    (WIN.get_width(), WIN.get_height()), './themePygame_gui.json')
+    (WIN.get_width(), WIN.get_height()), os.path.join('themes','./themePygame_gui.json'))
 
 
 def PYtxt(txt: str, fontSize: int = 28, font: str = 'freesansbold.ttf', 
@@ -25,7 +28,7 @@ def PYtxt(txt: str, fontSize: int = 28, font: str = 'freesansbold.ttf',
 def createbuttons(board: Grid):
 
     row_items = ((WIN.get_width()-board.width)-10)//60
-    row_gap = 15
+    row_gap = 5
     col_gap = (((WIN.get_width()-board.width)/row_items) - 60)/2
     start = board.width
     y = 110
@@ -40,6 +43,7 @@ def createbuttons(board: Grid):
         ('Start', lambda : board.start()),
         ('Load', lambda : load(board)),
         ('Red', lambda : board.toggle_red()),
+        ('Pan', lambda : board.toggle_pan())
     ]:
         Button(relative_rect=pygame.Rect((start+n*row_gap, y + y_count*col_gap), (60, 45)), text=name,
         manager=manager, tool_tip_text=None, func= func)
@@ -55,17 +59,16 @@ def createbuttons(board: Grid):
             y += 60
 
     y = board.height + 15
-    x = 40
+    x = 10
     for name, func in [
-        ('OR', lambda : board.set_component(OrGate)),
         ('Supply', lambda: board.set_component(Generator)),
         ('Line', lambda: board.set_component(Line)),
-        ('Diode', lambda : board.set_component(Diode)),
         ('Timer', lambda : board.set_component(Timer_comp)),
+        ('Diode', lambda : board.set_component(Diode)),
+        ('OR', lambda : board.set_component(OrGate)),
         ('NOT', lambda : board.set_component(NOTGate)),
         ('XOR', lambda : board.set_component(XORGate)),
         ('AND', lambda : board.set_component(ANDGate))
-
     ]:
         Button(relative_rect=pygame.Rect((x, y), (60, 40)), text=name,
         manager=manager, tool_tip_text=None, func= func)
@@ -90,7 +93,7 @@ def checkKeypress(board):
         board.randomBoard()
 
 
-board = Grid(75, 75, 600, 600, WIN)
+board = Grid(100, 100, 500, 500, WIN)
 
 createbuttons(board)
 
@@ -102,14 +105,12 @@ while run:
     time_delta = clock.tick(FPS)/1000.0
 
     # checks for left click
-    if pygame.mouse.get_pressed()[0]:
+    if board.pan_selected:
+            board.pan() 
+    elif pygame.mouse.get_pressed()[0]:
         if board.runGameOfLife:
-            board.start()
-        x, y = pygame.mouse.get_pos()
-        gap = board.width // board.rows
-        y //= gap
-        x //= gap
-        board.clicked(y, x)
+                board.start()
+        board.clicked()
 
     # checks for right click
     elif pygame.mouse.get_pressed()[2]:
@@ -131,11 +132,14 @@ while run:
         manager.process_events(event)
 
     WIN.fill(absBlack)
-
-    board.update()
+    thread = Thread(target= board.update(), args=(10,))
+    thread.start()
+    # board.update()
 
     manager.update(time_delta)
     manager.draw_ui(WIN)
+    thread.join()
+
 
     pygame.display.update()
 
