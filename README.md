@@ -8,10 +8,10 @@ Read more on Wikipedia : https://en.wikipedia.org/wiki/Wireworld
 
 A Wireworld cell can be in one of four different states :
 
-- empty <span style="color: black;">black</span>,
-- electron head <span style="color: blue;">blue</span>,
-- electron tail <span style="color: red;">red</span>,
-- conductor <span style="color: yellow;">yellow</span>.
+- empty <p style="color: black;">black</p>,
+- electron head <p style="color: blue;">blue</p>,
+- electron tail <p style="color: red;">red</p>,
+- conductor <p style="color: yellow;">yellow</p>.
 
 As in all cellular automata, time proceeds in discrete steps called generations (sometimes "gens" or "ticks"). Cells behave as follows:
 
